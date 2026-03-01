@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Light (default) */
+:root,
+[data-theme="light"] {
+  --mt-bg: #f8f5f1;
+  --mt-surface: #ffffff;
+  --mt-border: #e8e4df;
+  --mt-border-strong: #b0b0b0;
+  --mt-muted: #888888;
+  --mt-body: #4a4a4a;
+  --mt-primary: #705b51;
+  --mt-primary-hover: #5c4a42;
+  --mt-pink: #f5f0eb;
+  --mt-pink-text: #6b5b52;
+  --mt-brown-light: #e8e4df;
+  --mt-brown-mid: #9a8f88;
+  --mt-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+/* Dark（primary 按鈕與 hover 改為淺灰，不要卡其色） */
+[data-theme="dark"] {
+  --mt-bg: #1c1b1a;
+  --mt-surface: #2a2826;
+  --mt-border: #3d3a38;
+  --mt-border-strong: #5c5854;
+  --mt-muted: #9a9590;
+  --mt-body: #e8e4e0;
+  --mt-primary: #e5e7eb;
+  --mt-primary-hover: #d1d5db;
+  --mt-pink: #3d3835;
+  --mt-pink-text: #c4a77d;
+  --mt-brown-light: #3d3835;
+  --mt-brown-mid: #7a756f;
+  --mt-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* 深色模式：primary 按鈕與「已選中」改為淺灰底、黑字，hover 為稍深灰（不要卡其色） */
+[data-theme="dark"] .selected-primary,
+[data-theme="dark"] .bg-mt-primary {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+[data-theme="dark"] .hover\:bg-mt-primary-hover:hover {
+  background-color: #d1d5db !important;
+}
+
+/* 深色模式：轉盤 stopper 改淺灰底、深色邊線，不要淺卡其 */
+[data-theme="dark"] .wheel-stopper {
+  fill: #e5e7eb;
+  stroke: #111827;
+}
+
+body {
+  background-color: var(--mt-bg);
+  color: var(--mt-body);
+  @apply antialiased min-h-screen;
+}
+
+/* 深色模式：My Meals「預設」標籤不要背景框，文字改為稍深一點的灰（與餐點名稱區分） */
+[data-theme="dark"] .default-tag {
+  background-color: transparent;
+  color: #9ca3af;
+}
+
+/* 深色模式：Add Meal 輸入框內「已輸入的文字」改為黑色，placeholder 不變 */
+[data-theme="dark"] .input-meal {
+  color: #111827;
+}
+
+/* 輸入框 focus 時改為 UI 色（不要橘黃色預設框） */
+input:focus,
+textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--mt-border-strong);
+}
+
+@layer utilities {
+  .tap-highlight-none {
+    -webkit-tap-highlight-color: transparent;
+  }
+  .card-raised {
+    background-color: var(--mt-surface);
+    border-radius: 1.5rem;
+    box-shadow: var(--mt-card-shadow);
+  }
+}
