@@ -65,12 +65,11 @@ export function Wheel({
     const edge = total - 0.4 * segmentAngle;
 
     const DURATION_MS = 8000;
-    const T1 = 1200;
-    const T2 = 2700;
-    const T3 = 4800;
-    const T4 = 7350;
+    const T1 = 1100;
+    const T2 = 2600;
+    const T3 = 4600;
+    const T4 = 7200;
 
-    const easeOutQuad = (t: number) => 1 - (1 - t) * (1 - t);
     const easeOutCubic = (t: number) => 1 - (1 - t) * (1 - t) * (1 - t);
 
     const startTime = performance.now();
@@ -91,16 +90,16 @@ export function Wheel({
       }
       let current: number;
       if (elapsed < T1) {
-        const t = easeOutQuad(elapsed / T1);
+        const t = elapsed / T1;
         current = start + t * (waypoint3 - start);
       } else if (elapsed < T2) {
-        const t = easeOutQuad((elapsed - T1) / (T2 - T1));
+        const t = (elapsed - T1) / (T2 - T1);
         current = waypoint3 + t * (waypoint2 - waypoint3);
       } else if (elapsed < T3) {
-        const t = easeOutQuad((elapsed - T2) / (T3 - T2));
+        const t = (elapsed - T2) / (T3 - T2);
         current = waypoint2 + t * (waypoint1 - waypoint2);
       } else if (elapsed < T4) {
-        const t = easeOutQuad((elapsed - T3) / (T4 - T3));
+        const t = (elapsed - T3) / (T4 - T3);
         current = waypoint1 + t * (edge - waypoint1);
       } else {
         const t = easeOutCubic((elapsed - T4) / (DURATION_MS - T4));
