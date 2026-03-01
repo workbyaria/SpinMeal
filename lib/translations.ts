@@ -42,6 +42,7 @@ export type MessageKey =
   | "myMeals.add"
   | "myMeals.cancel"
   | "myMeals.optionsCount"
+  | "myMeals.wheelLimitHint"
   | "myMeals.searchPlaceholder"
   | "myMeals.emptyByType"
   | "myMeals.emptySearch"
@@ -111,6 +112,7 @@ const messages: Record<LocaleId, Record<MessageKey, string>> = {
     "myMeals.add": "新增",
     "myMeals.cancel": "取消",
     "myMeals.optionsCount": "{type}：{count} 個選項",
+    "myMeals.wheelLimitHint": "轉盤最多顯示 16 個選項，餐點可無上限新增。",
     "myMeals.searchPlaceholder": "搜尋餐點或餐廳…",
     "myMeals.emptyByType": "此餐別尚無餐點。上方表單可新增，或點「還原為預設選項」載入預設清單。",
     "myMeals.emptySearch": "沒有符合搜尋的項目。",
@@ -133,7 +135,7 @@ const messages: Record<LocaleId, Record<MessageKey, string>> = {
     "share.generating": "生成中…",
     "share.todayEat": "今天吃這個",
     "share.ratioPost": "貼文 4:5",
-    "share.ratioStory": "現實動態 9:16",
+    "share.ratioStory": "限時動態 9:16",
     "share.close": "關閉",
     "share.done": "已下載，可關閉",
   },
@@ -179,6 +181,7 @@ const messages: Record<LocaleId, Record<MessageKey, string>> = {
     "myMeals.add": "新增",
     "myMeals.cancel": "取消",
     "myMeals.optionsCount": "{type}：{count} 个选项",
+    "myMeals.wheelLimitHint": "转盘最多显示 16 个选项，餐点可无限新增。",
     "myMeals.searchPlaceholder": "搜寻餐点或餐厅…",
     "myMeals.emptyByType": "此餐别尚无餐点。上方表单可新增，或点「还原为预设选项」载入预设清单。",
     "myMeals.emptySearch": "没有符合搜寻的项目。",
@@ -201,7 +204,7 @@ const messages: Record<LocaleId, Record<MessageKey, string>> = {
     "share.generating": "生成中…",
     "share.todayEat": "今天吃这个",
     "share.ratioPost": "贴文 4:5",
-    "share.ratioStory": "现实动态 9:16",
+    "share.ratioStory": "限时动态 9:16",
     "share.close": "关闭",
     "share.done": "已下载，可关闭",
   },
@@ -210,7 +213,7 @@ const messages: Record<LocaleId, Record<MessageKey, string>> = {
     "nav.wheel": "Wheel",
     "nav.history": "History",
     "nav.myMeals": "My Meals",
-    "home.prompt": "Guess what's for today? Give it a spin!",
+    "home.prompt": "Can't decide what to eat? Give it a spin!",
     "home.mealTypeTag": "Meal type",
     "home.wheelTag": "Wheel",
     "home.spin": "SPIN",
@@ -247,6 +250,7 @@ const messages: Record<LocaleId, Record<MessageKey, string>> = {
     "myMeals.add": "Add",
     "myMeals.cancel": "Cancel",
     "myMeals.optionsCount": "{type}: {count} options",
+    "myMeals.wheelLimitHint": "The wheel shows up to 16 options at a time; you can add unlimited meals.",
     "myMeals.searchPlaceholder": "Search meals…",
     "myMeals.emptyByType": "No meals for this type. Add above or reset to default.",
     "myMeals.emptySearch": "No matches.",

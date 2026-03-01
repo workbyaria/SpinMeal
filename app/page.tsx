@@ -8,6 +8,7 @@ import { LanguageMenu } from "@/components/LanguageMenu";
 import { MealCard } from "@/components/MealCard";
 import { Nav } from "@/components/Nav";
 import { ShareImageModal } from "@/components/ShareImageModal";
+import { WheelLogo } from "@/components/WheelLogo";
 import { Tabs } from "@/components/Tabs";
 import { Wheel } from "@/components/Wheel";
 import { useLocale } from "@/components/LocaleProvider";
@@ -107,7 +108,7 @@ export default function HomePage() {
       <header className="sticky top-0 z-20 flex items-center justify-between border-b border-mt-border bg-mt-surface px-4 py-3">
         <div className="flex items-center gap-2">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-mt-brown-light text-mt-body" aria-hidden>
-            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <WheelLogo />
           </span>
           <h1 className="text-lg font-bold tracking-tight text-mt-body">{t("header.appName")}</h1>
         </div>
