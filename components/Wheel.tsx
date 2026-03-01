@@ -126,7 +126,7 @@ export function Wheel({
       </svg>
       <div
         ref={wheelRef}
-        className={`aspect-square w-full max-w-[280px] overflow-hidden rounded-full shadow-xl ring-2 ${isDark ? "ring-neutral-500/50" : "ring-[#a89888]/40"}`}
+        className={`relative z-0 aspect-square w-full max-w-[280px] overflow-hidden rounded-full shadow-xl ring-2 ${isDark ? "ring-neutral-500/50" : "ring-[#a89888]/40"}`}
         style={{
           transform: `rotate(${-rotation}deg)`,
         }}
