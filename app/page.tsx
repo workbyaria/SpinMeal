@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { LanguageMenu } from "@/components/LanguageMenu";
 import { MealCard } from "@/components/MealCard";
 import { Nav } from "@/components/Nav";
+import { ShareImageModal } from "@/components/ShareImageModal";
 import { Tabs } from "@/components/Tabs";
 import { Wheel } from "@/components/Wheel";
 import { useLocale } from "@/components/LocaleProvider";
@@ -30,6 +31,7 @@ export default function HomePage() {
   const [spinKey, setSpinKey] = useState(0);
   const [displayName, setDisplayNameState] = useState("");
   const [theme, setThemeState] = useState<ThemeId>("light");
+  const [shareModalOpen, setShareModalOpen] = useState(false);
   const { t, locale } = useLocale();
 
   useEffect(() => {
@@ -177,7 +179,7 @@ export default function HomePage() {
           )}
 
           {result && !isSpinning && (
-            <div className="relative pt-5">
+            <div className="result-reveal relative pt-5 space-y-3">
               <div className="card-raised rounded-2xl p-4 pt-8 pb-5">
                 <span className="absolute left-1/2 top-0 -translate-x-1/2 rounded-lg border border-mt-border bg-mt-brown-light px-3 py-1 text-xs font-medium text-mt-body">
                   {t("home.resultTag")}
@@ -186,12 +188,34 @@ export default function HomePage() {
                   meal={result}
                   onAddToMyMeals={handleAddToMyMeals}
                   center
+                  titleLabel={t("home.resultMealLabel")}
                 />
+              </div>
+              <div className="flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setShareModalOpen(true)}
+                  className="header-action-btn"
+                >
+                  {t("share.button")}
+                </button>
               </div>
             </div>
           )}
         </div>
       </main>
+
+      {result && (
+        <ShareImageModal
+          open={shareModalOpen}
+          onClose={() => setShareModalOpen(false)}
+          meal={result}
+          todayLabel={t("share.todayEat")}
+          appName={t("header.appName")}
+          isDark={theme === "dark"}
+          t={t}
+        />
+      )}
 
       <Footer />
       <Nav />

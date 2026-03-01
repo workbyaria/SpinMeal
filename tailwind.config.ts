@@ -29,11 +29,12 @@ const config: Config = {
         display: ["var(--font-display)", "system-ui", "sans-serif"],
       },
       animation: {
-        "spin-wheel": "spin-wheel 4s cubic-bezier(0.17, 0.67, 0.12, 0.99) forwards",
+        "spin-wheel": "spin-wheel 6.5s cubic-bezier(0, 0, 0.35, 1) forwards",
       },
       keyframes: {
         "spin-wheel": {
           "0%": { transform: "rotate(var(--wheel-start, 0deg))" },
+          "70%": { transform: "rotate(var(--wheel-overshoot, 0deg))" },
           "100%": { transform: "rotate(var(--wheel-final-rotation, 0deg))" },
         },
       },

@@ -13,6 +13,7 @@ export type MessageKey =
   | "home.emptyMessage"
   | "home.goToMyMeals"
   | "home.resultTag"
+  | "home.resultMealLabel"
   | "mealCard.mealName"
   | "mealCard.tags"
   | "mealCard.notes"
@@ -57,7 +58,15 @@ export type MessageKey =
   | "greeting.morning"
   | "greeting.noon"
   | "greeting.evening"
-  | "greeting.night";
+  | "greeting.night"
+  | "share.button"
+  | "share.adHint"
+  | "share.generating"
+  | "share.todayEat"
+  | "share.ratioPost"
+  | "share.ratioStory"
+  | "share.close"
+  | "share.done";
 
 const messages: Record<LocaleId, Record<MessageKey, string>> = {
   "zh-TW": {
@@ -73,6 +82,7 @@ const messages: Record<LocaleId, Record<MessageKey, string>> = {
     "home.emptyMessage": "你還沒有加入任何選項，去「我的餐點」新增吧",
     "home.goToMyMeals": "前往我的餐點",
     "home.resultTag": "本次結果",
+    "home.resultMealLabel": "就決定吃",
     "mealCard.mealName": "餐點名稱",
     "mealCard.tags": "標籤",
     "mealCard.notes": "備註",
@@ -118,6 +128,14 @@ const messages: Record<LocaleId, Record<MessageKey, string>> = {
     "greeting.noon": "午安",
     "greeting.evening": "晚安",
     "greeting.night": "夜深了",
+    "share.button": "生成分享圖",
+    "share.adHint": "廣告結束後將自動生成圖片",
+    "share.generating": "生成中…",
+    "share.todayEat": "今天吃這個",
+    "share.ratioPost": "貼文 1:1",
+    "share.ratioStory": "限動 9:16",
+    "share.close": "關閉",
+    "share.done": "已下載，可關閉",
   },
   "zh-CN": {
     "header.appName": "转转．吃什么 SpinMeal",
@@ -132,6 +150,7 @@ const messages: Record<LocaleId, Record<MessageKey, string>> = {
     "home.emptyMessage": "你还没有加入任何选项，去「我的餐点」新增吧",
     "home.goToMyMeals": "前往我的餐点",
     "home.resultTag": "本次结果",
+    "home.resultMealLabel": "就决定吃",
     "mealCard.mealName": "餐点名称",
     "mealCard.tags": "标签",
     "mealCard.notes": "备注",
@@ -177,6 +196,14 @@ const messages: Record<LocaleId, Record<MessageKey, string>> = {
     "greeting.noon": "午安",
     "greeting.evening": "晚安",
     "greeting.night": "夜深了",
+    "share.button": "生成分享图",
+    "share.adHint": "广告结束后将自动生成图片",
+    "share.generating": "生成中…",
+    "share.todayEat": "今天吃这个",
+    "share.ratioPost": "贴文 1:1",
+    "share.ratioStory": "限动 9:16",
+    "share.close": "关闭",
+    "share.done": "已下载，可关闭",
   },
   en: {
     "header.appName": "SpinMeal",
@@ -191,6 +218,7 @@ const messages: Record<LocaleId, Record<MessageKey, string>> = {
     "home.emptyMessage": "No options yet. Add some in My Meals.",
     "home.goToMyMeals": "Go to My Meals",
     "home.resultTag": "Result",
+    "home.resultMealLabel": "Let's eat",
     "mealCard.mealName": "Meal name",
     "mealCard.tags": "Tags",
     "mealCard.notes": "Notes",
@@ -236,6 +264,14 @@ const messages: Record<LocaleId, Record<MessageKey, string>> = {
     "greeting.noon": "Good afternoon",
     "greeting.evening": "Good evening",
     "greeting.night": "Good night",
+    "share.button": "Share as image",
+    "share.adHint": "Image will generate after the ad",
+    "share.generating": "Generating…",
+    "share.todayEat": "Today's pick",
+    "share.ratioPost": "Post 1:1",
+    "share.ratioStory": "Story 9:16",
+    "share.close": "Close",
+    "share.done": "Downloaded. You can close.",
   },
 };
 

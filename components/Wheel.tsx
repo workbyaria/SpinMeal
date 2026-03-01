@@ -41,6 +41,8 @@ export function Wheel({
   const textFill = isDark ? "#e8e4e0" : "#3d3630"; /* 深色模式用淺灰字，與 --mt-body 一致 */
   const segmentStroke = isDark ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.6)";
   const [rotation, setRotation] = useState(0);
+  const [spinRotation, setSpinRotation] = useState<number | null>(null);
+  const [justStopped, setJustStopped] = useState(false);
   const wheelRef = useRef<HTMLDivElement>(null);
   const hasTriggeredEnd = useRef(false);
 
@@ -56,25 +58,66 @@ export function Wheel({
     const minTurns = 5 + Math.floor(Math.random() * 4);
     const k = Math.ceil((rotation + minTurns * 360 - segmentCenter) / 360) + Math.floor(Math.random() * 2);
     const total = segmentCenter + 360 * Math.max(k, minTurns);
-    if (wheelRef.current) {
-      wheelRef.current.style.setProperty("--wheel-start", `-${rotation}deg`);
-      wheelRef.current.style.setProperty("--wheel-final-rotation", `-${total}deg`);
-      wheelRef.current.classList.remove("animate-none");
-      wheelRef.current.classList.add("animate-spin-wheel");
-    }
-    const t = setTimeout(() => {
-      if (wheelRef.current) {
-        wheelRef.current.classList.remove("animate-spin-wheel");
-        wheelRef.current.classList.add("animate-none");
+    const start = total - 360 * minTurns;
+    const waypoint3 = total - 3 * segmentAngle;
+    const waypoint2 = total - 2 * segmentAngle;
+    const waypoint1 = total - 1 * segmentAngle;
+    const edge = total - 0.4 * segmentAngle;
+
+    const DURATION_MS = 8000;
+    const T1 = 1200;
+    const T2 = 2700;
+    const T3 = 4800;
+    const T4 = 7350;
+
+    const easeOutQuad = (t: number) => 1 - (1 - t) * (1 - t);
+    const easeOutCubic = (t: number) => 1 - (1 - t) * (1 - t) * (1 - t);
+
+    const startTime = performance.now();
+    setSpinRotation(start);
+
+    let rafId: number;
+    const tick = (now: number) => {
+      const elapsed = now - startTime;
+      if (elapsed >= DURATION_MS) {
+        setSpinRotation(null);
+        setRotation(total);
+        setJustStopped(true);
+        if (!hasTriggeredEnd.current) {
+          hasTriggeredEnd.current = true;
+          onSpinEnd?.();
+        }
+        return;
       }
-      setRotation(total);
-      if (!hasTriggeredEnd.current) {
-        hasTriggeredEnd.current = true;
-        onSpinEnd?.();
+      let current: number;
+      if (elapsed < T1) {
+        const t = easeOutQuad(elapsed / T1);
+        current = start + t * (waypoint3 - start);
+      } else if (elapsed < T2) {
+        const t = easeOutQuad((elapsed - T1) / (T2 - T1));
+        current = waypoint3 + t * (waypoint2 - waypoint3);
+      } else if (elapsed < T3) {
+        const t = easeOutQuad((elapsed - T2) / (T3 - T2));
+        current = waypoint2 + t * (waypoint1 - waypoint2);
+      } else if (elapsed < T4) {
+        const t = easeOutQuad((elapsed - T3) / (T4 - T3));
+        current = waypoint1 + t * (edge - waypoint1);
+      } else {
+        const t = easeOutCubic((elapsed - T4) / (DURATION_MS - T4));
+        current = edge + t * (total - edge);
       }
-    }, 4000);
-    return () => clearTimeout(t);
+      setSpinRotation(current);
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
   }, [isSpinning]);
+
+  useEffect(() => {
+    if (!justStopped) return;
+    const id = setTimeout(() => setJustStopped(false), 320);
+    return () => clearTimeout(id);
+  }, [justStopped]);
 
   const { t: tMsg, locale } = useLocale();
   const isZh = locale === "zh-TW" || locale === "zh-CN";
@@ -114,7 +157,7 @@ export function Wheel({
     <div className={`relative flex aspect-square max-w-[280px] items-center justify-center ${className}`}>
       {/* Stopper：上方圓弧、下方尖角，位置維持新位置 */}
       <svg
-        className="wheel-stopper absolute left-1/2 top-0 z-10 w-12 -translate-x-1/2 -translate-y-6 drop-shadow-lg"
+        className={`wheel-stopper absolute left-1/2 top-0 z-10 w-12 -translate-x-1/2 -translate-y-6 drop-shadow-lg ${justStopped ? "animate-stopper-shake" : ""}`}
         viewBox="0 0 48 56"
         fill="var(--mt-primary)"
         stroke="var(--mt-body)"
@@ -128,7 +171,7 @@ export function Wheel({
         ref={wheelRef}
         className={`relative z-0 aspect-square w-full max-w-[280px] overflow-hidden rounded-full shadow-xl ring-2 ${isDark ? "ring-neutral-500/50" : "ring-[#a89888]/40"}`}
         style={{
-          transform: `rotate(${-rotation}deg)`,
+          transform: `rotate(${-(spinRotation ?? rotation)}deg)`,
         }}
         aria-hidden
       >

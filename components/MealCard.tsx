@@ -9,6 +9,8 @@ interface MealCardProps {
   compact?: boolean;
   center?: boolean;
   className?: string;
+  /** 覆寫「餐點名稱」那行，例如首頁結果用「就決定是」 */
+  titleLabel?: string;
 }
 
 export function MealCard({
@@ -17,17 +19,19 @@ export function MealCard({
   compact = false,
   center = false,
   className = "",
+  titleLabel,
 }: MealCardProps) {
   const { t } = useLocale();
   const tags = meal.tags?.length ? meal.tags : (meal as MealItem & { cuisine?: string[] }).cuisine ?? [];
   const c = center ? "text-center" : "";
+  const label = titleLabel ?? t("mealCard.mealName");
   return (
     <article
       className={`rounded-2xl bg-transparent ${compact ? "p-2" : ""} ${c} ${className}`}
-      aria-label={`${t("mealCard.mealName")}: ${meal.name}`}
+      aria-label={`${label}: ${meal.name}`}
     >
       <div className={`mt-3 border-b border-mt-border pb-4 ${c}`}>
-        <p className="text-sm font-medium uppercase tracking-wider text-mt-muted">{t("mealCard.mealName")}</p>
+        <p className="text-sm font-medium uppercase tracking-wider text-mt-muted">{label}</p>
         <p className={`mt-2 font-semibold text-mt-body ${compact ? "text-base" : "text-lg"}`}>
           {meal.name}
         </p>
