@@ -78,23 +78,9 @@ textarea:focus {
   box-shadow: 0 0 0 2px var(--mt-border-strong);
 }
 
-/* Sticky header 按鈕：窄螢幕 = 2×2 正方（橫書兩字一行），寬螢幕 = 單行橫向 */
-.header-btn {
-  @apply inline-flex shrink-0 items-center justify-center rounded-lg border border-mt-border bg-mt-brown-light text-center text-sm font-medium leading-tight text-mt-body tap-highlight-none hover:bg-mt-border;
-  min-height: 2.8em;
-  width: 2.8em;
-  padding: 0.25rem;
-  white-space: normal;
-  /* 寬螢幕：單行橫向顯示，按鈕寬度隨內容 */
-}
-@media (min-width: 640px) {
-  .header-btn {
-    width: auto;
-    min-width: 0;
-    min-height: auto;
-    padding: 0.375rem 0.75rem;
-    white-space: nowrap;
-  }
+/* Sticky header 按鈕：橫向單行 */
+.header-action-btn {
+  @apply rounded-lg border border-mt-border bg-mt-brown-light px-3 py-1.5 text-sm font-medium text-mt-body tap-highlight-none hover:bg-mt-border;
 }
 
 @layer utilities {

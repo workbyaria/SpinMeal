@@ -113,7 +113,7 @@ export default function HomePage() {
           <button
             type="button"
             onClick={() => setThemeState(toggleTheme())}
-            className="header-btn"
+            className="header-action-btn"
           >
             {theme === "dark" ? t("theme.light") : t("theme.dark")}
           </button>

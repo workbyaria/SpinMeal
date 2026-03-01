@@ -138,15 +138,8 @@ export default function MyMealsPage() {
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={resetToStarterPack}
-            className="header-btn"
-          >
-            {t("myMeals.resetDefault")}
-          </button>
-          <button
-            type="button"
             onClick={() => setThemeState(toggleTheme())}
-            className="header-btn"
+            className="header-action-btn"
           >
             {theme === "dark" ? t("theme.light") : t("theme.dark")}
           </button>
@@ -223,6 +216,15 @@ export default function MyMealsPage() {
             className="mt-2 w-full rounded-xl border border-mt-border bg-mt-bg px-3 py-2 text-sm text-mt-body placeholder:text-mt-muted"
             aria-label={t("myMeals.searchPlaceholder")}
           />
+          <div className="mt-3 flex justify-end">
+            <button
+              type="button"
+              onClick={resetToStarterPack}
+              className="header-action-btn"
+            >
+              {t("myMeals.resetDefault")}
+            </button>
+          </div>
         </div>
 
         {filteredBySearch.length === 0 ? (

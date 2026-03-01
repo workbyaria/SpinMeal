@@ -51,19 +51,10 @@ export default function HistoryPage() {
           <h1 className="text-lg font-bold tracking-tight text-mt-body">{t("header.appName")}</h1>
         </div>
         <div className="flex items-center gap-2">
-          {records.length > 0 && (
-            <button
-              type="button"
-              onClick={handleClear}
-              className="header-btn"
-            >
-              {t("history.clear")}
-            </button>
-          )}
           <button
             type="button"
             onClick={() => setThemeState(toggleTheme())}
-            className="header-btn"
+            className="header-action-btn"
           >
             {theme === "dark" ? t("theme.light") : t("theme.dark")}
           </button>
@@ -78,7 +69,17 @@ export default function HistoryPage() {
               <p className="text-sm text-mt-muted">{t("history.empty")}</p>
             </div>
           ) : (
-            <ul className="space-y-3">
+            <>
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  onClick={handleClear}
+                  className="header-action-btn"
+                >
+                  {t("history.clear")}
+                </button>
+              </div>
+              <ul className="space-y-3">
               {records.map((r) => {
                 const meal = mealMap.get(r.resultMealId);
                 const date = new Date(r.createdAt);
@@ -99,7 +100,8 @@ export default function HistoryPage() {
                   </li>
                 );
               })}
-            </ul>
+              </ul>
+            </>
           )}
           <AdSlot />
         </div>
