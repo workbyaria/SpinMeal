@@ -213,7 +213,6 @@ export default function HomePage() {
           todayLabel={t("share.todayEat")}
           appName={t("header.appName")}
           isDark={theme === "dark"}
-          t={t}
         />
       )}
 

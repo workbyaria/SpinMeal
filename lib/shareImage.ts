@@ -1,10 +1,15 @@
 /**
- * 生成分享圖：Canvas 繪製 1:1（貼文）或 9:16（限動），含結果與品牌。
+ * 生成分享圖：Canvas 繪製 4:5（貼文）或 9:16（現實動態），含結果與品牌。
  */
 
-export type ShareRatio = "1:1" | "9:16";
+export type ShareRatio = "4:5" | "9:16";
 
 const W = 1080;
+
+function getHeight(ratio: ShareRatio): number {
+  if (ratio === "4:5") return Math.round((W * 5) / 4);
+  return Math.round((W * 16) / 9);
+}
 
 const THEME = {
   light: {
@@ -38,7 +43,7 @@ export interface ShareImageOptions {
 export function drawShareImage(opts: ShareImageOptions): Promise<Blob> {
   const { mealName, todayLabel, appName, ratio, isDark } = opts;
   const theme = getTheme(isDark);
-  const height = ratio === "1:1" ? W : Math.round((W * 16) / 9);
+  const height = getHeight(ratio);
   const canvas = document.createElement("canvas");
   canvas.width = W;
   canvas.height = height;
