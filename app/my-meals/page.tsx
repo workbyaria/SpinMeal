@@ -216,15 +216,16 @@ export default function MyMealsPage() {
             className="mt-2 w-full rounded-xl border border-mt-border bg-mt-bg px-3 py-2 text-sm text-mt-body placeholder:text-mt-muted"
             aria-label={t("myMeals.searchPlaceholder")}
           />
-          <div className="mt-3 flex justify-end">
-            <button
-              type="button"
-              onClick={resetToStarterPack}
-              className="header-action-btn"
-            >
-              {t("myMeals.resetDefault")}
-            </button>
-          </div>
+        </div>
+
+        <div className="flex justify-end">
+          <button
+            type="button"
+            onClick={resetToStarterPack}
+            className="header-action-btn"
+          >
+            {t("myMeals.resetDefault")}
+          </button>
         </div>
 
         {filteredBySearch.length === 0 ? (
