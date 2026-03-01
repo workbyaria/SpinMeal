@@ -12,12 +12,12 @@ const SEGMENT_COLORS_LIGHT = [
   "#d4c4b4", "#b8a898", "#e0d8cc", "#a89888", "#c8b8a8",
 ];
 
-/* 深色模式：純黑白灰（無藍／暖色調），中淺灰為主以利黑字辨識 */
+/* 深色模式：深灰區塊 + 淺色字，與整體 dark 風格一致 */
 const SEGMENT_COLORS_DARK = [
-  "#737373", "#8c8c8c", "#a3a3a3", "#b8b8b8", "#d4d4d4",
-  "#8c8c8c", "#b8b8b8", "#737373", "#e5e5e5", "#a3a3a3",
-  "#d4d4d4", "#737373", "#b8b8b8", "#8c8c8c", "#e5e5e5",
-  "#a3a3a3", "#d4d4d4", "#737373", "#b8b8b8", "#8c8c8c",
+  "#404040", "#4a4a4a", "#525252", "#5a5a5a", "#606060",
+  "#454545", "#4d4d4d", "#555555", "#5c5c5c", "#484848",
+  "#404040", "#525252", "#5a5a5a", "#4a4a4a", "#555555",
+  "#4d4d4d", "#606060", "#404040", "#5a5a5a", "#4a4a4a",
 ];
 
 interface WheelProps {
@@ -38,8 +38,8 @@ export function Wheel({
   isDark = false,
 }: WheelProps) {
   const segmentColors = isDark ? SEGMENT_COLORS_DARK : SEGMENT_COLORS_LIGHT;
-  const textFill = isDark ? "#171717" : "#3d3630";
-  const segmentStroke = isDark ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.6)";
+  const textFill = isDark ? "#e8e4e0" : "#3d3630"; /* 深色模式用淺灰字，與 --mt-body 一致 */
+  const segmentStroke = isDark ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.6)";
   const [rotation, setRotation] = useState(0);
   const wheelRef = useRef<HTMLDivElement>(null);
   const hasTriggeredEnd = useRef(false);
@@ -152,7 +152,7 @@ export function Wheel({
             const rotateDeg = midAngleDeg + (flipLeft ? 180 : 0);
             return (
               <g key={meal.id}>
-                <path d={d} fill={color} stroke="rgba(255,255,255,0.6)" strokeWidth="0.35" />
+                <path d={d} fill={color} stroke={segmentStroke} strokeWidth="0.35" />
                 <text
                   x={tx}
                   y={ty}

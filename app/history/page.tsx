@@ -43,7 +43,7 @@ export default function HistoryPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-10 flex items-center justify-between border-b border-mt-border bg-mt-surface/95 px-4 py-3 supports-[backdrop-filter]:bg-mt-surface/90 backdrop-blur-sm">
+      <header className="sticky top-0 z-10 flex items-center justify-between border-b border-mt-border bg-mt-surface px-4 py-3">
         <div className="flex items-center gap-2">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-mt-brown-light text-mt-body" aria-hidden>
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -55,7 +55,7 @@ export default function HistoryPage() {
             <button
               type="button"
               onClick={handleClear}
-              className="rounded-lg border border-mt-border bg-mt-brown-light px-3 py-1.5 text-sm font-medium text-mt-body tap-highlight-none hover:bg-mt-border"
+              className="header-btn"
             >
               {t("history.clear")}
             </button>
@@ -63,7 +63,7 @@ export default function HistoryPage() {
           <button
             type="button"
             onClick={() => setThemeState(toggleTheme())}
-            className="rounded-lg border border-mt-border bg-mt-brown-light px-3 py-1.5 text-sm font-medium text-mt-body tap-highlight-none hover:bg-mt-border"
+            className="header-btn"
           >
             {theme === "dark" ? t("theme.light") : t("theme.dark")}
           </button>

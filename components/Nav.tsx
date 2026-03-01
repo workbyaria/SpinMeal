@@ -15,7 +15,7 @@ export function Nav() {
   const { t } = useLocale();
   return (
     <nav
-      className="sticky bottom-0 z-10 border-t border-mt-border bg-mt-surface/95 py-2 supports-[backdrop-filter]:bg-mt-surface/90 backdrop-blur-sm"
+      className="sticky bottom-0 z-10 border-t border-mt-border bg-mt-surface py-2"
       aria-label={t("nav.ariaLabel")}
     >
       <ul className="flex justify-around">
