@@ -124,7 +124,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      <main className="flex-1 overflow-auto px-4 pb-28 pt-6">
+      <main className="flex-1 overflow-auto px-4 pb-12 pt-6">
         <p className="mb-6 text-center text-sm text-mt-muted">
           {greeting}{locale === "en" ? ", " : "，"}{displayName ? `${displayName} ` : ""}
           {promptDisplay}
@@ -180,7 +180,7 @@ export default function HomePage() {
           )}
 
           {result && !isSpinning && (
-            <div className="result-reveal relative pt-5 space-y-3">
+            <div className="result-reveal relative pt-5">
               <div className="card-raised rounded-2xl p-4 pt-8 pb-5">
                 <span className="absolute left-1/2 top-0 -translate-x-1/2 rounded-lg border border-mt-border bg-mt-brown-light px-3 py-1 text-xs font-medium text-mt-body">
                   {t("home.resultTag")}
@@ -192,11 +192,11 @@ export default function HomePage() {
                   titleLabel={t("home.resultMealLabel")}
                 />
               </div>
-              <div className="flex justify-center">
+              <div className="mt-12 flex justify-center">
                 <button
                   type="button"
                   onClick={() => setShareModalOpen(true)}
-                  className="header-action-btn"
+                  className="selected-primary w-full max-w-[200px] rounded-xl bg-mt-primary py-3.5 text-base font-semibold text-white tap-highlight-none hover:bg-mt-primary-hover"
                 >
                   {t("share.button")}
                 </button>
