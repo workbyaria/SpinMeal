@@ -2,13 +2,24 @@
 
 const INSTAGRAM_URL = "https://instagram.com/friendlycatgroup";
 const EMAIL_URL = "mailto:workbyaria@gmail.com";
+const WEBSITE_URL = "http://www.friendlycatgroup.com/";
 
 export function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="bg-mt-surface py-4 text-center">
-      <p className="text-[11px] text-mt-muted">
-        SpinMeal © {year} · Friendly Cat Group
+      <p className="text-[11px] tracking-wide text-mt-muted">
+        SpinMeal © {year}
+        <span className="mx-1.5" aria-hidden>·</span>
+        <a
+          href={WEBSITE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline text-mt-muted hover:text-mt-body transition-colors"
+          aria-label="Friendly Cat Group 官網"
+        >
+          Friendly Cat Group
+        </a>
       </p>
       <div className="mt-2 flex justify-center gap-4">
         <a
