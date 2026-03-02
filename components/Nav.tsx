@@ -15,10 +15,10 @@ export function Nav() {
   const { t } = useLocale();
   return (
     <nav
-      className="sticky bottom-0 z-10 border-t border-mt-border bg-mt-surface py-2"
+      className="sticky bottom-0 z-10 flex min-h-[52px] items-center border-t border-mt-border bg-mt-surface px-2 py-3"
       aria-label={t("nav.ariaLabel")}
     >
-      <ul className="flex justify-around">
+      <ul className="flex w-full justify-around">
         {LINKS.map(({ href, labelKey }) => {
           const active = pathname === href;
           return (
@@ -27,8 +27,8 @@ export function Nav() {
                 href={href}
                 className={
                   active
-                    ? "selected-primary block rounded-xl px-4 py-2 text-sm font-medium text-white tap-highlight-none bg-mt-primary"
-                    : "block rounded-xl px-4 py-2 text-sm font-medium text-mt-muted tap-highlight-none hover:text-mt-body"
+                    ? "selected-primary flex min-h-[44px] items-center justify-center rounded-xl px-4 py-3 text-sm font-medium text-white tap-highlight-none bg-mt-primary"
+                    : "flex min-h-[44px] items-center justify-center rounded-xl px-4 py-3 text-sm font-medium text-mt-muted tap-highlight-none hover:text-mt-body"
                 }
               >
                 {t(labelKey)}
