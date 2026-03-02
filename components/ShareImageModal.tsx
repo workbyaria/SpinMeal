@@ -91,7 +91,7 @@ export function ShareImageModal({
       >
         {step === "ratio" && (
           <>
-            <p className="mb-5 text-center text-sm text-mt-muted">{t("share.adHint")}</p>
+            <p className="mb-5 text-center text-sm text-mt-muted">{t("share.chooseSize")}</p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <button
                 type="button"

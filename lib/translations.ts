@@ -61,6 +61,7 @@ export type MessageKey =
   | "greeting.evening"
   | "greeting.night"
   | "share.button"
+  | "share.chooseSize"
   | "share.adHint"
   | "share.generating"
   | "share.todayEat"
@@ -131,6 +132,7 @@ const messages: Record<LocaleId, Record<MessageKey, string>> = {
     "greeting.evening": "晚安",
     "greeting.night": "夜深了",
     "share.button": "生成分享圖",
+    "share.chooseSize": "選擇分享尺寸",
     "share.adHint": "廣告播放結束後，圖片將保存到裝置",
     "share.generating": "生成中…",
     "share.todayEat": "今天吃這個",
@@ -200,6 +202,7 @@ const messages: Record<LocaleId, Record<MessageKey, string>> = {
     "greeting.evening": "晚安",
     "greeting.night": "夜深了",
     "share.button": "生成分享图",
+    "share.chooseSize": "选择分享尺寸",
     "share.adHint": "广告播放结束后，图片将保存到设备",
     "share.generating": "生成中…",
     "share.todayEat": "今天吃这个",
@@ -269,6 +272,7 @@ const messages: Record<LocaleId, Record<MessageKey, string>> = {
     "greeting.evening": "Good evening",
     "greeting.night": "Good night",
     "share.button": "Share as image",
+    "share.chooseSize": "Choose share size",
     "share.adHint": "After the ad, the image will be saved to your device",
     "share.generating": "Generating…",
     "share.todayEat": "Today's pick",
