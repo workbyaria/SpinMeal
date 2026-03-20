@@ -89,7 +89,11 @@ export function ShareImageModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={onClose}>
       <div
-        className="max-h-[90vh] w-full max-w-md overflow-auto rounded-2xl border border-mt-border bg-mt-surface p-6 shadow-xl"
+        className={
+          step === "ad"
+            ? "max-h-[92vh] w-full max-w-xl overflow-auto rounded-2xl border border-mt-border bg-mt-surface p-5 shadow-xl sm:p-6"
+            : "max-h-[90vh] w-full max-w-md overflow-auto rounded-2xl border border-mt-border bg-mt-surface p-6 shadow-xl"
+        }
         onClick={(e) => e.stopPropagation()}
       >
         {step === "ratio" && (
@@ -118,8 +122,8 @@ export function ShareImageModal({
 
         {step === "ad" && (
           <>
-            <div className="mb-4 rounded-2xl border border-mt-border overflow-hidden bg-mt-brown-light/50">
-              <AdSlot />
+            <div className="mb-5 flex w-full justify-center">
+              <AdSlot layout="mediumRectangle" className="shadow-sm" />
             </div>
             <p className="text-center text-sm text-mt-muted">
               {t("share.adHint")} {countdown > 0 && <span className="font-medium text-mt-body">({countdown}s)</span>}

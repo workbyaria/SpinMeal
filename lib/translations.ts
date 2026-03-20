@@ -54,6 +54,7 @@ export type MessageKey =
   | "theme.dark"
   | "settings.ariaLabel"
   | "ad.ariaLabel"
+  | "ad.mpuHint"
   | "nav.ariaLabel"
   | "tabs.ariaLabel"
   | "greeting.morning"
@@ -125,6 +126,7 @@ const messages: Record<LocaleId, Record<MessageKey, string>> = {
     "theme.dark": "深色模式",
     "settings.ariaLabel": "語言設定",
     "ad.ariaLabel": "廣告",
+    "ad.mpuHint": "預留 300×250（Google 多媒體廣告常見 MPU）",
     "nav.ariaLabel": "主選單",
     "tabs.ariaLabel": "餐點類型",
     "greeting.morning": "早安",
@@ -195,6 +197,7 @@ const messages: Record<LocaleId, Record<MessageKey, string>> = {
     "theme.dark": "深色模式",
     "settings.ariaLabel": "语言设置",
     "ad.ariaLabel": "广告",
+    "ad.mpuHint": "预留 300×250（Google 展示广告常见 MPU）",
     "nav.ariaLabel": "主选单",
     "tabs.ariaLabel": "餐点类型",
     "greeting.morning": "早安",
@@ -265,6 +268,7 @@ const messages: Record<LocaleId, Record<MessageKey, string>> = {
     "theme.dark": "Dark",
     "settings.ariaLabel": "Language",
     "ad.ariaLabel": "Ad",
+    "ad.mpuHint": "Reserved 300×250 (standard MPU, Google Display)",
     "nav.ariaLabel": "Main menu",
     "tabs.ariaLabel": "Meal type",
     "greeting.morning": "Good morning",
