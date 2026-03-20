@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { AdSlot } from "@/components/AdSlot";
 import { useLocale } from "@/components/LocaleProvider";
+import { getResultDisplayName } from "@/lib/mealDisplay";
 import { drawShareImage, downloadBlob, type ShareRatio } from "@/lib/shareImage";
 import type { MealItem } from "@/lib/types";
 
@@ -58,19 +59,21 @@ export function ShareImageModal({
     setStep("ad");
   };
 
+  const resultLine = getResultDisplayName(meal);
+
   useEffect(() => {
     if (step !== "ad" || !open) return;
     if (countdown <= 0) {
       setStep("generating");
       drawShareImage({
-        mealName: meal.name,
+        mealName: resultLine,
         todayLabel,
         appName,
         ratio,
         isDark,
       })
         .then((blob) => {
-          const name = `SpinMeal-${meal.name.replace(/[^\w\s\u4e00-\u9fff]/g, "")}.png`;
+          const name = `SpinMeal-${resultLine.replace(/[^\w\s\u4e00-\u9fff]/g, "")}.png`;
           downloadBlob(blob, name);
           setStep("done");
         })
@@ -79,7 +82,7 @@ export function ShareImageModal({
     }
     const id = setTimeout(() => setCountdown((c) => c - 1), 1000);
     return () => clearTimeout(id);
-  }, [step, countdown, open, meal.name, todayLabel, appName, ratio, isDark]);
+  }, [step, countdown, open, resultLine, todayLabel, appName, ratio, isDark]);
 
   if (!open) return null;
 

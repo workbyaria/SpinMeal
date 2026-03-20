@@ -284,7 +284,8 @@ const messages: Record<LocaleId, Record<MessageKey, string>> = {
 };
 
 export function getMessage(locale: LocaleId, key: MessageKey, params?: { type?: string; count?: number }): string {
-  let s = messages[locale][key] ?? messages["en"][key] ?? key;
+  const pack = messages[locale] ?? messages.en;
+  let s = pack[key] ?? messages.en[key] ?? key;
   if (params?.type !== undefined) s = s.replace("{type}", params.type);
   if (params?.count !== undefined) s = s.replace("{count}", String(params.count));
   return s;

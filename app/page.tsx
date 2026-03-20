@@ -35,17 +35,24 @@ export default function HomePage() {
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const { t, locale } = useLocale();
 
-  useEffect(() => {
-    setMeals(getAllMealsForSpinning());
-    setDisplayNameState(getDisplayName());
-    setThemeState(getTheme());
+  const loadMeals = useCallback(() => {
+    try {
+      setMeals(getAllMealsForSpinning());
+    } catch {
+      setMeals([]);
+    }
   }, []);
 
   useEffect(() => {
-    const onMealsChange = () => setMeals(getAllMealsForSpinning());
+    loadMeals();
+    setDisplayNameState(getDisplayName());
+    setThemeState(getTheme());
+    const onMealsChange = () => {
+      queueMicrotask(() => loadMeals());
+    };
     window.addEventListener("mealschange", onMealsChange);
     return () => window.removeEventListener("mealschange", onMealsChange);
-  }, []);
+  }, [loadMeals]);
 
   const wheelCandidates = useMemo(() => {
     const optionsForType = filterMealsByType(meals, mealType);
@@ -54,6 +61,15 @@ export default function HomePage() {
       ? [...optionsForType]
       : sampleN(optionsForType, MAX_WHEEL_SLICES, seed);
   }, [meals, mealType]);
+
+  /** 轉動中若候選與索引不一致，Wheel 不會呼叫 onSpinEnd — 解除卡死 */
+  useEffect(() => {
+    if (!isSpinning) return;
+    if (selectedIndex == null) return;
+    if (wheelCandidates.length === 0 || selectedIndex < 0 || selectedIndex >= wheelCandidates.length) {
+      setIsSpinning(false);
+    }
+  }, [isSpinning, selectedIndex, wheelCandidates.length]);
 
   const handleSpin = useCallback(() => {
     if (wheelCandidates.length === 0) return;
@@ -93,7 +109,6 @@ export default function HomePage() {
     const meal = getAllMeals().find((m) => m.id === id);
     if (!meal || meal.source === "user") return;
     const newMeal = copyMealAsUser(meal);
-    setMeals(getAllMealsForSpinning());
     setResult((r) => (r?.id === id ? newMeal : r));
   }, []);
 
@@ -124,7 +139,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      <main className="flex-1 overflow-auto px-4 pb-12 pt-6">
+      <main className="flex-1 overflow-auto px-4 pb-28 pt-6">
         <p className="mb-6 text-center text-sm text-mt-muted">
           {greeting}{locale === "en" ? ", " : "，"}{displayName ? `${displayName} ` : ""}
           {promptDisplay}
@@ -136,7 +151,7 @@ export default function HomePage() {
               <span className="absolute left-1/2 top-0 -translate-x-1/2 rounded-lg border border-mt-border bg-mt-brown-light px-3 py-1 text-xs font-medium text-mt-body">
                 {t("home.mealTypeTag")}
               </span>
-              <Tabs value={mealType} onChange={setMealType} className="mt-1" />
+              <Tabs value={mealType} onChange={setMealType} className="mt-1" disabled={isSpinning} />
             </div>
           </div>
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLocale } from "@/components/LocaleProvider";
+import { getWheelDisplayName } from "@/lib/mealDisplay";
 import type { MealItem } from "@/lib/types";
 
 /* 淺色模式：中性棕色／杏色系，不鮮豔 */
@@ -55,7 +56,11 @@ export function Wheel({
     hasTriggeredEnd.current = false;
     const index = selectedIndex;
     const segmentCenter = (index + 0.5) * segmentAngle;
-    const minTurns = 5 + Math.floor(Math.random() * 4);
+    /*
+     * 動畫節奏（UX）：低風險、可能一天多次使用 → 約 4s、4–6 圈較符合「夠期待又不拖」。
+     * 前段較快、末段減速（慣性），比平均速度更易感覺公平、不敷衍。
+     */
+    const minTurns = 4 + Math.floor(Math.random() * 3);
     const k = Math.ceil((rotation + minTurns * 360 - segmentCenter) / 360) + Math.floor(Math.random() * 2);
     const total = segmentCenter + 360 * Math.max(k, minTurns);
     const start = total - 360 * minTurns;
@@ -64,11 +69,11 @@ export function Wheel({
     const waypoint1 = total - 1 * segmentAngle;
     const edge = total - 0.4 * segmentAngle;
 
-    const DURATION_MS = 8000;
-    const T1 = 1100;
-    const T2 = 2600;
-    const T3 = 4600;
-    const T4 = 7200;
+    const DURATION_MS = 4000;
+    const T1 = 550;
+    const T2 = 1300;
+    const T3 = 2300;
+    const T4 = 3600;
 
     const easeOutCubic = (t: number) => 1 - (1 - t) * (1 - t) * (1 - t);
 
@@ -114,7 +119,7 @@ export function Wheel({
 
   useEffect(() => {
     if (!justStopped) return;
-    const id = setTimeout(() => setJustStopped(false), 320);
+    const id = setTimeout(() => setJustStopped(false), 260);
     return () => clearTimeout(id);
   }, [justStopped]);
 
@@ -208,7 +213,7 @@ export function Wheel({
                     letterSpacing: "0.02em",
                   }}
                 >
-                  {truncateLabel(meal.name)}
+                  {truncateLabel(getWheelDisplayName(meal))}
                 </text>
               </g>
             );

@@ -1,7 +1,7 @@
 "use client";
 
 const INSTAGRAM_URL = "https://instagram.com/friendlycatgroup";
-const EMAIL_URL = "mailto:workbyaria@gmail.com";
+const EMAIL_URL = "mailto:friendlycatgroup@gmail.com";
 const WEBSITE_URL = "http://www.friendlycatgroup.com/";
 
 export function Footer() {

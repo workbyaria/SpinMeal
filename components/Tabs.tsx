@@ -7,9 +7,10 @@ interface TabsProps {
   value: MealType;
   onChange: (v: MealType) => void;
   className?: string;
+  disabled?: boolean;
 }
 
-export function Tabs({ value, onChange, className = "" }: TabsProps) {
+export function Tabs({ value, onChange, className = "", disabled = false }: TabsProps) {
   const { t } = useLocale();
   const options: MealType[] = ["breakfast", "lunch", "dinner"];
   const labelKeys = { breakfast: "tabs.breakfast" as const, lunch: "tabs.lunch" as const, dinner: "tabs.dinner" as const };
@@ -22,10 +23,15 @@ export function Tabs({ value, onChange, className = "" }: TabsProps) {
       {options.map((opt) => (
         <button
           key={opt}
+          type="button"
           role="tab"
           aria-selected={value === opt}
-          onClick={() => onChange(opt)}
+          disabled={disabled}
+          aria-disabled={disabled}
+          onClick={() => !disabled && onChange(opt)}
           className={`flex-1 rounded-lg py-2.5 text-sm font-medium transition-all tap-highlight-none ${
+            disabled ? "cursor-not-allowed opacity-50" : ""
+          } ${
             value === opt
               ? "selected-primary bg-mt-primary text-white shadow-sm"
               : "text-mt-body hover:text-mt-body"

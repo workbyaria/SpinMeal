@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AdSlot } from "@/components/AdSlot";
 import { Footer } from "@/components/Footer";
 import { LanguageMenu } from "@/components/LanguageMenu";
@@ -10,12 +10,13 @@ import { Tabs } from "@/components/Tabs";
 import { useLocale } from "@/components/LocaleProvider";
 import { getStarterPack } from "@/data/starterPack";
 import { filterMealsByType } from "@/lib/filter";
+import { getWheelDisplayName, splitTrailingEmoji } from "@/lib/mealDisplay";
 import { getUserMeals, setUserMeals } from "@/lib/storage";
 import { getTheme, toggleTheme, type ThemeId } from "@/lib/theme";
 import type { MealItem, MealType } from "@/lib/types";
 
 function isStarterItem(meal: MealItem): boolean {
-  return meal.id.startsWith("starter-");
+  return typeof meal.id === "string" && meal.id.startsWith("starter-");
 }
 
 const MEAL_TYPE_LABEL_KEYS: Record<MealType, "tabs.breakfast" | "tabs.lunch" | "tabs.dinner"> = {
@@ -46,26 +47,33 @@ export default function MyMealsPage() {
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [theme, setThemeState] = useState<ThemeId>("light");
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     setThemeState(getTheme());
   }, []);
 
-  const load = useCallback(() => setMeals(getUserMeals()), []);
+  const load = useCallback(() => {
+    try {
+      setMeals(getUserMeals());
+    } catch {
+      setMeals([]);
+    }
+  }, []);
 
   useEffect(() => {
     load();
-  }, [load]);
-
-  useEffect(() => {
-    const onMealsChange = () => load();
+    const onMealsChange = () => {
+      queueMicrotask(() => load());
+    };
     window.addEventListener("mealschange", onMealsChange);
     return () => window.removeEventListener("mealschange", onMealsChange);
   }, [load]);
 
-  useEffect(() => {
-    if (!editingId) setForm((f) => ({ ...f, mealType: mealTypeTab }));
-  }, [mealTypeTab, editingId]);
+  const handleMealTypeTabChange = (v: MealType) => {
+    setMealTypeTab(v);
+    if (!editingId) setForm((f) => ({ ...f, mealType: v }));
+  };
 
   const filteredByType = useMemo(
     () => filterMealsByType(meals, mealTypeTab),
@@ -74,22 +82,31 @@ export default function MyMealsPage() {
   const filteredBySearch = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
     if (!q) return filteredByType;
-    return filteredByType.filter((m) => m.name.toLowerCase().includes(q));
+    return filteredByType.filter((m) => {
+      const nm = m?.name;
+      return typeof nm === "string" && nm.toLowerCase().includes(q);
+    });
   }, [filteredByType, searchQuery]);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name.trim()) return;
     const tags = parseTags(form.tags);
+    const rawName = form.name.trim();
+    const { base, emoji: parsedEmoji } = splitTrailingEmoji(rawName);
+    const nameLine = parsedEmoji ? base : rawName;
+    const list = getUserMeals();
+    const prev = editingId ? list.find((m) => m.id === editingId) : undefined;
+    const emoji = parsedEmoji ?? prev?.emoji;
     const item: MealItem = {
       id: editingId ?? `user-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
-      name: form.name.trim(),
+      name: nameLine,
       mealType: form.mealType,
       ...(tags.length > 0 && { tags }),
       source: "user",
       ...(form.notes.trim() && { notes: form.notes.trim() }),
+      ...(emoji && { emoji }),
     };
-    const list = getUserMeals();
     if (editingId) {
       setUserMeals(list.map((m) => (m.id === editingId ? item : m)));
     } else {
@@ -125,6 +142,9 @@ export default function MyMealsPage() {
       notes: m.notes ?? "",
     });
     setEditingId(m.id);
+    requestAnimationFrame(() => {
+      formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
   };
 
   return (
@@ -155,11 +175,15 @@ export default function MyMealsPage() {
               <span className="absolute left-1/2 top-0 -translate-x-1/2 rounded-lg border border-mt-border bg-mt-brown-light px-3 py-1 text-xs font-medium text-mt-body">
                 {t("myMeals.mealTypeTag")}
               </span>
-              <Tabs value={mealTypeTab} onChange={setMealTypeTab} className="mt-1" />
+              <Tabs value={mealTypeTab} onChange={handleMealTypeTabChange} className="mt-1" />
             </div>
           </div>
 
-          <form onSubmit={submit} className="card-raised rounded-2xl p-4 text-center">
+          <form
+            ref={formRef}
+            onSubmit={submit}
+            className={`card-raised rounded-2xl p-4 text-center ${editingId ? "ring-2 ring-mt-primary/40" : ""}`}
+          >
             <h2 className="mb-4 text-base font-semibold text-mt-body">
               {editingId ? t("myMeals.editMeal") : t("myMeals.addMeal")}
             </h2>
@@ -173,6 +197,16 @@ export default function MyMealsPage() {
                 placeholder={t("myMeals.namePlaceholder")}
                 className="input-meal mt-1 w-full rounded-lg border border-mt-border px-3 py-2 text-mt-body"
                 required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium uppercase tracking-wider text-mt-muted">{t("myMeals.tagsLabel")}</label>
+              <input
+                type="text"
+                value={form.tags}
+                onChange={(e) => setForm((f) => ({ ...f, tags: e.target.value }))}
+                placeholder={t("myMeals.tagsPlaceholder")}
+                className="input-meal mt-1 w-full rounded-lg border border-mt-border px-3 py-2 text-mt-body"
               />
             </div>
             <div>
@@ -254,8 +288,10 @@ export default function MyMealsPage() {
                     </span>
                   )}
                   <span className="font-medium text-mt-body">
-                    {meal.name}
-                    {meal.notes?.trim() ? ` (${meal.notes.trim()})` : ""}
+                    {getWheelDisplayName(meal)}
+                    {typeof meal.notes === "string" && meal.notes.trim()
+                      ? ` (${meal.notes.trim()})`
+                      : ""}
                   </span>
                 </div>
                 <div className="flex shrink-0 gap-2">

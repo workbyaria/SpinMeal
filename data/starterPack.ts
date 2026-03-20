@@ -6,84 +6,89 @@ function id(mealType: "breakfast" | "lunch" | "dinner", n: number): string {
   return `starter-${p}-${n}`;
 }
 
+/** 純名稱 + emoji 分欄：轉盤只顯示 name，抽中結果才顯示 name + 空格 + emoji */
+function e(label: string, emoji: string): Pick<MealItem, "name" | "emoji"> {
+  return { name: label, emoji };
+}
+
 /** 英文版預設：美式經典 popular dishes，每項縮減為兩個詞 */
 function getStarterPackEn(): MealItem[] {
   const breakfast: MealItem[] = [
-    { id: id("breakfast", 1), name: "Avocado Toast", mealType: "breakfast", source: "user" },
-    { id: id("breakfast", 2), name: "French Toast", mealType: "breakfast", source: "user" },
-    { id: id("breakfast", 3), name: "Bacon Eggs", mealType: "breakfast", source: "user" },
-    { id: id("breakfast", 4), name: "Hash Browns", mealType: "breakfast", source: "user" },
-    { id: id("breakfast", 5), name: "Eggs Benedict", mealType: "breakfast", source: "user" },
-    { id: id("breakfast", 6), name: "Pancake Stack", mealType: "breakfast", source: "user" },
-    { id: id("breakfast", 7), name: "Oatmeal Bowl", mealType: "breakfast", source: "user" },
-    { id: id("breakfast", 8), name: "Cheese Omelet", mealType: "breakfast", source: "user" },
-    { id: id("breakfast", 9), name: "Yogurt Parfait", mealType: "breakfast", source: "user" },
-    { id: id("breakfast", 10), name: "Smoothie Bowl", mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 1), ...e("Avocado Toast", "🥑"), mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 2), ...e("French Toast", "🍞"), mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 3), ...e("Bacon Eggs", "🥓"), mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 4), ...e("Hash Browns", "🥔"), mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 5), ...e("Eggs Benedict", "🍳"), mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 6), ...e("Pancake Stack", "🥞"), mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 7), ...e("Oatmeal Bowl", "🥣"), mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 8), ...e("Cheese Omelet", "🧀"), mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 9), ...e("Yogurt Parfait", "🍓"), mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 10), ...e("Smoothie Bowl", "🥤"), mealType: "breakfast", source: "user" },
   ];
   const lunch: MealItem[] = [
-    { id: id("lunch", 1), name: "Tuna Sandwich", mealType: "lunch", source: "user" },
-    { id: id("lunch", 2), name: "Caesar Salad", mealType: "lunch", source: "user" },
-    { id: id("lunch", 3), name: "Club Sandwich", mealType: "lunch", source: "user" },
-    { id: id("lunch", 4), name: "Fish Tacos", mealType: "lunch", source: "user" },
-    { id: id("lunch", 5), name: "Chicken Wrap", mealType: "lunch", source: "user" },
-    { id: id("lunch", 6), name: "Turkey Club", mealType: "lunch", source: "user" },
-    { id: id("lunch", 7), name: "Tomato Soup", mealType: "lunch", source: "user" },
-    { id: id("lunch", 8), name: "Cobb Salad", mealType: "lunch", source: "user" },
-    { id: id("lunch", 9), name: "Grilled Cheese", mealType: "lunch", source: "user" },
-    { id: id("lunch", 10), name: "Onion Rings", mealType: "lunch", source: "user" },
+    { id: id("lunch", 1), ...e("Tuna Sandwich", "🥪"), mealType: "lunch", source: "user" },
+    { id: id("lunch", 2), ...e("Caesar Salad", "🥗"), mealType: "lunch", source: "user" },
+    { id: id("lunch", 3), ...e("Club Sandwich", "🥪"), mealType: "lunch", source: "user" },
+    { id: id("lunch", 4), ...e("Fish Tacos", "🌮"), mealType: "lunch", source: "user" },
+    { id: id("lunch", 5), ...e("Chicken Wrap", "🌯"), mealType: "lunch", source: "user" },
+    { id: id("lunch", 6), ...e("Turkey Club", "🥪"), mealType: "lunch", source: "user" },
+    { id: id("lunch", 7), ...e("Tomato Soup", "🍲"), mealType: "lunch", source: "user" },
+    { id: id("lunch", 8), ...e("Cobb Salad", "🥗"), mealType: "lunch", source: "user" },
+    { id: id("lunch", 9), ...e("Grilled Cheese", "🧀"), mealType: "lunch", source: "user" },
+    { id: id("lunch", 10), ...e("Onion Rings", "🧅"), mealType: "lunch", source: "user" },
   ];
   const dinner: MealItem[] = [
-    { id: id("dinner", 1), name: "Grilled Salmon", mealType: "dinner", source: "user" },
-    { id: id("dinner", 2), name: "Meat Loaf", mealType: "dinner", source: "user" },
-    { id: id("dinner", 3), name: "BBQ Ribs", mealType: "dinner", source: "user" },
-    { id: id("dinner", 4), name: "Mac Cheese", mealType: "dinner", source: "user" },
-    { id: id("dinner", 5), name: "Roast Turkey", mealType: "dinner", source: "user" },
-    { id: id("dinner", 6), name: "Chicken Wings", mealType: "dinner", source: "user" },
-    { id: id("dinner", 7), name: "Shrimp Scampi", mealType: "dinner", source: "user" },
-    { id: id("dinner", 8), name: "Clam Chowder", mealType: "dinner", source: "user" },
-    { id: id("dinner", 9), name: "Prime Rib", mealType: "dinner", source: "user" },
-    { id: id("dinner", 10), name: "Fried Chicken", mealType: "dinner", source: "user" },
+    { id: id("dinner", 1), ...e("Grilled Salmon", "🐟"), mealType: "dinner", source: "user" },
+    { id: id("dinner", 2), ...e("Meat Loaf", "🍖"), mealType: "dinner", source: "user" },
+    { id: id("dinner", 3), ...e("BBQ Ribs", "🍖"), mealType: "dinner", source: "user" },
+    { id: id("dinner", 4), ...e("Mac Cheese", "🧀"), mealType: "dinner", source: "user" },
+    { id: id("dinner", 5), ...e("Roast Turkey", "🦃"), mealType: "dinner", source: "user" },
+    { id: id("dinner", 6), ...e("Chicken Wings", "🍗"), mealType: "dinner", source: "user" },
+    { id: id("dinner", 7), ...e("Shrimp Scampi", "🦐"), mealType: "dinner", source: "user" },
+    { id: id("dinner", 8), ...e("Clam Chowder", "🥣"), mealType: "dinner", source: "user" },
+    { id: id("dinner", 9), ...e("Prime Rib", "🥩"), mealType: "dinner", source: "user" },
+    { id: id("dinner", 10), ...e("Fried Chicken", "🍗"), mealType: "dinner", source: "user" },
   ];
   return [...breakfast, ...lunch, ...dinner];
 }
 
-/** 繁中／簡體預設：台灣日常選項 */
+/** 繁中／簡體預設：台灣日常選項（emoji 與食物語意對應，與英文版同一套邏輯） */
 function getStarterPackZh(): MealItem[] {
   const breakfast: MealItem[] = [
-    { id: id("breakfast", 1), name: "蛋餅", mealType: "breakfast", source: "user" },
-    { id: id("breakfast", 2), name: "美而美", mealType: "breakfast", source: "user" },
-    { id: id("breakfast", 3), name: "麥味登", mealType: "breakfast", source: "user" },
-    { id: id("breakfast", 4), name: "鐵板麵", mealType: "breakfast", source: "user" },
-    { id: id("breakfast", 5), name: "飯糰", mealType: "breakfast", source: "user" },
-    { id: id("breakfast", 6), name: "吐司", mealType: "breakfast", source: "user" },
-    { id: id("breakfast", 7), name: "豆漿油條", mealType: "breakfast", source: "user" },
-    { id: id("breakfast", 8), name: "饅頭", mealType: "breakfast", source: "user" },
-    { id: id("breakfast", 9), name: "地瓜粥", mealType: "breakfast", source: "user" },
-    { id: id("breakfast", 10), name: "漢堡蛋", mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 1), ...e("蛋餅", "🌯"), mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 2), ...e("美而美", "🥪"), mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 3), ...e("麥味登", "🍔"), mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 4), ...e("鐵板麵", "🍝"), mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 5), ...e("飯糰", "🍙"), mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 6), ...e("吐司", "🍞"), mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 7), ...e("豆漿油條", "🥛"), mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 8), ...e("饅頭", "🫓"), mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 9), ...e("地瓜粥", "🍠"), mealType: "breakfast", source: "user" },
+    { id: id("breakfast", 10), ...e("漢堡蛋", "🍔"), mealType: "breakfast", source: "user" },
   ];
   const lunch: MealItem[] = [
-    { id: id("lunch", 1), name: "便當", mealType: "lunch", source: "user" },
-    { id: id("lunch", 2), name: "滷肉飯", mealType: "lunch", source: "user" },
-    { id: id("lunch", 3), name: "牛肉麵", mealType: "lunch", source: "user" },
-    { id: id("lunch", 4), name: "拉麵", mealType: "lunch", source: "user" },
-    { id: id("lunch", 5), name: "麻辣燙", mealType: "lunch", source: "user" },
-    { id: id("lunch", 6), name: "壽司", mealType: "lunch", source: "user" },
-    { id: id("lunch", 7), name: "韓式拌飯", mealType: "lunch", source: "user" },
-    { id: id("lunch", 8), name: "水餃", mealType: "lunch", source: "user" },
-    { id: id("lunch", 9), name: "炒飯", mealType: "lunch", source: "user" },
-    { id: id("lunch", 10), name: "涼麵", mealType: "lunch", source: "user" },
+    { id: id("lunch", 1), ...e("便當", "🍱"), mealType: "lunch", source: "user" },
+    { id: id("lunch", 2), ...e("滷肉飯", "🍚"), mealType: "lunch", source: "user" },
+    { id: id("lunch", 3), ...e("牛肉麵", "🍜"), mealType: "lunch", source: "user" },
+    { id: id("lunch", 4), ...e("拉麵", "🍜"), mealType: "lunch", source: "user" },
+    { id: id("lunch", 5), ...e("麻辣燙", "🌶️"), mealType: "lunch", source: "user" },
+    { id: id("lunch", 6), ...e("壽司", "🍣"), mealType: "lunch", source: "user" },
+    { id: id("lunch", 7), ...e("韓式拌飯", "🍚"), mealType: "lunch", source: "user" },
+    { id: id("lunch", 8), ...e("水餃", "🥟"), mealType: "lunch", source: "user" },
+    { id: id("lunch", 9), ...e("炒飯", "🍛"), mealType: "lunch", source: "user" },
+    { id: id("lunch", 10), ...e("涼麵", "🍜"), mealType: "lunch", source: "user" },
   ];
   const dinner: MealItem[] = [
-    { id: id("dinner", 1), name: "火鍋", mealType: "dinner", source: "user" },
-    { id: id("dinner", 2), name: "海底撈", mealType: "dinner", source: "user" },
-    { id: id("dinner", 3), name: "義大利麵", mealType: "dinner", source: "user" },
-    { id: id("dinner", 4), name: "酸辣粉", mealType: "dinner", source: "user" },
-    { id: id("dinner", 5), name: "燒肉", mealType: "dinner", source: "user" },
-    { id: id("dinner", 6), name: "串串", mealType: "dinner", source: "user" },
-    { id: id("dinner", 7), name: "泰式料理", mealType: "dinner", source: "user" },
-    { id: id("dinner", 8), name: "熱炒", mealType: "dinner", source: "user" },
-    { id: id("dinner", 9), name: "居酒屋", mealType: "dinner", source: "user" },
-    { id: id("dinner", 10), name: "咖哩飯", mealType: "dinner", source: "user" },
+    { id: id("dinner", 1), ...e("火鍋", "🍲"), mealType: "dinner", source: "user" },
+    { id: id("dinner", 2), ...e("海底撈", "🍲"), mealType: "dinner", source: "user" },
+    { id: id("dinner", 3), ...e("義大利麵", "🍝"), mealType: "dinner", source: "user" },
+    { id: id("dinner", 4), ...e("酸辣粉", "🍜"), mealType: "dinner", source: "user" },
+    { id: id("dinner", 5), ...e("燒肉", "🥩"), mealType: "dinner", source: "user" },
+    { id: id("dinner", 6), ...e("串串", "🍢"), mealType: "dinner", source: "user" },
+    { id: id("dinner", 7), ...e("泰式料理", "🍛"), mealType: "dinner", source: "user" },
+    { id: id("dinner", 8), ...e("熱炒", "🥘"), mealType: "dinner", source: "user" },
+    { id: id("dinner", 9), ...e("居酒屋", "🍶"), mealType: "dinner", source: "user" },
+    { id: id("dinner", 10), ...e("咖哩飯", "🍛"), mealType: "dinner", source: "user" },
   ];
   return [...breakfast, ...lunch, ...dinner];
 }

@@ -7,5 +7,6 @@ export function filterMealsByType(
   meals: MealItem[],
   mealType: MealItem["mealType"]
 ): MealItem[] {
-  return meals.filter((meal) => meal.mealType === mealType);
+  if (!Array.isArray(meals)) return [];
+  return meals.filter((meal) => meal?.mealType === mealType);
 }

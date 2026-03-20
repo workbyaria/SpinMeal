@@ -7,6 +7,7 @@ import { LanguageMenu } from "@/components/LanguageMenu";
 import { Nav } from "@/components/Nav";
 import { WheelLogo } from "@/components/WheelLogo";
 import { useLocale } from "@/components/LocaleProvider";
+import { getResultDisplayName } from "@/lib/mealDisplay";
 import { getAllMeals } from "@/lib/meals";
 import { getHistory, setHistory } from "@/lib/storage";
 import { getTheme, toggleTheme, type ThemeId } from "@/lib/theme";
@@ -96,7 +97,8 @@ export default function HistoryPage() {
                     <p className="text-sm text-mt-body">{dateStr}</p>
                     <p className="mt-2 text-sm font-medium uppercase tracking-wider text-mt-muted">{t("history.result")}</p>
                     <p className="font-semibold text-mt-body">
-                      {t(MEAL_TYPE_KEYS[r.mealType])} → {meal?.name ?? r.resultMealId}
+                      {t(MEAL_TYPE_KEYS[r.mealType])} →{" "}
+                      {meal ? getResultDisplayName(meal) : r.resultMealId}
                     </p>
                   </li>
                 );

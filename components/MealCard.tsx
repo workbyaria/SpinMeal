@@ -1,6 +1,7 @@
 "use client";
 
 import { useLocale } from "@/components/LocaleProvider";
+import { getResultDisplayName } from "@/lib/mealDisplay";
 import type { MealItem } from "@/lib/types";
 
 interface MealCardProps {
@@ -25,15 +26,16 @@ export function MealCard({
   const tags = meal.tags?.length ? meal.tags : (meal as MealItem & { cuisine?: string[] }).cuisine ?? [];
   const c = center ? "text-center" : "";
   const label = titleLabel ?? t("mealCard.mealName");
+  const displayName = getResultDisplayName(meal);
   return (
     <article
       className={`rounded-2xl bg-transparent ${compact ? "p-2" : ""} ${c} ${className}`}
-      aria-label={`${label}: ${meal.name}`}
+      aria-label={`${label}: ${displayName}`}
     >
       <div className={`mt-3 border-b border-mt-border pb-4 ${c}`}>
         <p className="text-sm font-medium uppercase tracking-wider text-mt-muted">{label}</p>
         <p className={`mt-2 font-semibold text-mt-body ${compact ? "text-base" : "text-lg"}`}>
-          {meal.name}
+          {displayName}
         </p>
       </div>
       {tags.length > 0 && (

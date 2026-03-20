@@ -36,9 +36,12 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
   const setLocale = useCallback((l: LocaleId) => {
     setLocaleStorage(l);
     const meals = getUserMeals();
-    if (meals.length > 0 && meals.every((m) => m.id.startsWith("starter-"))) {
+    const allStarter =
+      Array.isArray(meals) &&
+      meals.length > 0 &&
+      meals.every((m) => m && typeof m.id === "string" && m.id.startsWith("starter-"));
+    if (allStarter) {
       setUserMeals(getStarterPack(l));
-      window.dispatchEvent(new Event("mealschange"));
     }
     setLocaleState(l);
   }, []);

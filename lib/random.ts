@@ -71,6 +71,7 @@ export function pickRandomIndex(meals: MealItem[], excludeId?: string): number {
     excludeIndex >= 0 && meals.length > 1
       ? meals.map((_, i) => i).filter((i) => i !== excludeIndex)
       : meals.map((_, i) => i);
+  if (indices.length === 0) return 0;
   const i = Math.floor(Math.random() * indices.length);
   return indices[i] ?? 0;
 }
