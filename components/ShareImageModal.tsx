@@ -61,6 +61,18 @@ export function ShareImageModal({
 
   const resultLine = getResultDisplayName(meal);
 
+  /** 廣告倒數與圖片生成中不可關閉（背景點擊／Esc），避免略過曝光；選尺寸與完成後可關閉 */
+  const dismissLocked = step === "ad" || step === "generating";
+
+  useEffect(() => {
+    if (!open || dismissLocked) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, dismissLocked, onClose]);
+
   useEffect(() => {
     if (step !== "ad" || !open) return;
     if (countdown <= 0) {
@@ -87,7 +99,10 @@ export function ShareImageModal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={onClose}>
+    <div
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 ${dismissLocked ? "cursor-default" : "cursor-pointer"}`}
+      onClick={() => !dismissLocked && onClose()}
+    >
       <div
         className={
           step === "ad"
@@ -95,10 +110,15 @@ export function ShareImageModal({
             : "max-h-[90vh] w-full max-w-md overflow-auto rounded-2xl border border-mt-border bg-mt-surface p-6 shadow-xl"
         }
         onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="share-modal-title"
       >
         {step === "ratio" && (
           <>
-            <p className="mb-5 text-center text-sm text-mt-muted">{t("share.chooseSize")}</p>
+            <p id="share-modal-title" className="mb-5 text-center text-sm text-mt-muted">
+              {t("share.chooseSize")}
+            </p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <button
                 type="button"
@@ -122,6 +142,9 @@ export function ShareImageModal({
 
         {step === "ad" && (
           <>
+            <p id="share-modal-title" className="sr-only">
+              {t("share.adHint")}
+            </p>
             <div className="mb-5 flex w-full justify-center">
               <AdSlot layout="mediumRectangle" className="shadow-sm" />
             </div>
@@ -131,22 +154,31 @@ export function ShareImageModal({
           </>
         )}
 
-        {(step === "generating" || step === "done") && (
-          <p className="py-6 text-center text-mt-body">
-            {step === "generating" ? t("share.generating") : t("share.done")}
-          </p>
+        {step === "generating" && (
+          <>
+            <p id="share-modal-title" className="sr-only">
+              {t("share.generating")}
+            </p>
+            <p className="py-6 text-center text-mt-body">{t("share.generating")}</p>
+          </>
         )}
 
         {step === "done" && (
-          <div className="mt-4 flex justify-center">
-            <button
-              type="button"
-              onClick={onClose}
-              className="rounded-xl bg-mt-primary px-6 py-2 text-sm font-medium text-white tap-highlight-none hover:bg-mt-primary-hover"
-            >
-              {t("share.close")}
-            </button>
-          </div>
+          <>
+            <p id="share-modal-title" className="sr-only">
+              {t("share.done")}
+            </p>
+            <p className="py-6 text-center text-mt-body">{t("share.done")}</p>
+            <div className="mt-4 flex justify-center">
+              <button
+                type="button"
+                onClick={onClose}
+                className="rounded-xl bg-mt-primary px-6 py-2 text-sm font-medium text-white tap-highlight-none hover:bg-mt-primary-hover"
+              >
+                {t("share.close")}
+              </button>
+            </div>
+          </>
         )}
       </div>
     </div>
