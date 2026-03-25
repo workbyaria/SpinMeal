@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "kill-port 3000 && next dev -p 3000",
+    "dev:clean": "kill-port 3000 && node -e \"try{require('fs').rmSync('.next',{recursive:true,force:true})}catch(e){}\" && next dev -p 3000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

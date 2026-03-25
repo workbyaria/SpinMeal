@@ -3,7 +3,7 @@
 /**
  * 左上角 logo：轉盤造型，圓心＋細指針。
  */
-export function WheelLogo({ className = "h-4 w-4" }: { className?: string }) {
+export function WheelLogo({ className = "h-5 w-5" }: { className?: string }) {
   return (
     <svg
       className={className}
